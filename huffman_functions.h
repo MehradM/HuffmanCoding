@@ -16,4 +16,12 @@ struct TreeNode {
     TreeNode* parent = nullptr;
 };
 
+class compare{
+public:
+    bool operator() (TreeNode* x, TreeNode* y ) {
+        return x->quantity > y->quantity;
+    }
+};
+typedef std::priority_queue<TreeNode*, std::vector<TreeNode*>, compare> tree_pqueue;
+tree_pqueue createTree(tree_pqueue);
 #endif //HUFFMANPROJECT_HUFFMAN_FUNCTIONS_H
