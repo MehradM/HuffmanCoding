@@ -1,0 +1,1 @@
+/usr/bin/c++.exe -g  -Wl,--enable-auto-import CMakeFiles/huffmanproject.dir/main.cpp.o CMakeFiles/huffmanproject.dir/huffman_functions.cpp.o  -o huffmanproject.exe -Wl,--out-implib,libhuffmanproject.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
