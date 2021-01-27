@@ -27,4 +27,6 @@ tree_pqueue createTree(tree_pqueue);
 std::map<char, std::pair<std::string,int>> character_map(tree_pqueue pqueue,TreeNode * root);
 void make_compressed_file(const std::string& fileName);
 std::string file_to_string(const std::string& fileName);
+std::string huffman_code_string(const std::string& str);
+tree_pqueue make_queue(const std::string& str);
 #endif //HUFFMANPROJECT_HUFFMAN_FUNCTIONS_H

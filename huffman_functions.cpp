@@ -3,6 +3,8 @@
 //
 #include "huffman_functions.h"
 #include <iostream>
+#include <fstream>
+#include <algorithm>
 using namespace std;
 
 tree_pqueue createTree(tree_pqueue queue) {
@@ -40,4 +42,43 @@ map<char, pair<string,int>> character_map(tree_pqueue pqueue, TreeNode *root) {
         pqueue.pop();
     }
     return charmap;
+}
+
+void make_compressed_file(const string& fileName) {
+    auto str = file_to_string(fileName);
+    auto huffmanString = huffman_code_string(str);
+
+}
+
+string file_to_string(const string& fileName) {
+    ifstream file(fileName);
+    string lines;
+    string line;
+    getline(file,line);
+    lines.append(line);
+    while (file.good()) {
+        lines.push_back('\n');
+        getline(file,line);
+        lines.append(line);
+    }
+    return lines;
+}
+
+std::string huffman_code_string(const string &str) {
+    auto pqueue = make_queue(str);
+}
+
+tree_pqueue make_queue(const string &str) {
+    string temp = str;
+    sort(temp.begin(),temp.end());
+    auto it = unique(temp.begin(),temp.end());
+    temp.erase(it,temp.end());
+    tree_pqueue pqueue;
+    for (int i = 0; i < temp.size(); ++i) {
+        int count = std::count(str.begin(),str.end(),temp[i]);
+        string str = "";
+        str.push_back(temp[i]);
+        pqueue.push(new TreeNode{str,count});
+    }
+    return pqueue;
 }
