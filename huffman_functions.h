@@ -25,4 +25,6 @@ public:
 typedef std::priority_queue<TreeNode*, std::vector<TreeNode*>, compare> tree_pqueue;
 tree_pqueue createTree(tree_pqueue);
 std::map<char, std::pair<std::string,int>> character_map(tree_pqueue pqueue,TreeNode * root);
+void make_compressed_file(const std::string& fileName);
+std::string file_to_string(const std::string& fileName);
 #endif //HUFFMANPROJECT_HUFFMAN_FUNCTIONS_H
