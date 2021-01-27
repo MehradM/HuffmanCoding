@@ -24,4 +24,5 @@ public:
 };
 typedef std::priority_queue<TreeNode*, std::vector<TreeNode*>, compare> tree_pqueue;
 tree_pqueue createTree(tree_pqueue);
+std::map<char, std::pair<std::string,int>> character_map(tree_pqueue pqueue,TreeNode * root);
 #endif //HUFFMANPROJECT_HUFFMAN_FUNCTIONS_H

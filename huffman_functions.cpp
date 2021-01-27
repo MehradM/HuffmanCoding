@@ -19,3 +19,25 @@ tree_pqueue createTree(tree_pqueue queue) {
     }
     return queue;
 }
+
+map<char, pair<string,int>> character_map(tree_pqueue pqueue, TreeNode *root) {
+    map<char, pair<string,int>> charmap;
+    while (!pqueue.empty()) {
+        auto node = pqueue.top();
+        string code;
+        int bit = 0;
+        auto temp = node;
+        while (temp != root) {
+            ++bit;
+            if(temp->parent->right == temp)
+                code.push_back('1');
+            else if(temp->parent->left == temp)
+                code.push_back('0');
+            temp = temp->parent;
+        }
+        pair<string,int> pair{code,bit};
+        charmap.insert({node->data[0],pair});
+        pqueue.pop();
+    }
+    return charmap;
+}
