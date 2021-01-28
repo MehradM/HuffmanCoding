@@ -184,7 +184,6 @@ std::string decode(const string &lines,const rchar_map& map, int charCount) {
     }
     string decodedString;
     int index = 0;
-    cout << str01 << endl;
     for (int i = 0; i < charCount; ++i) {
         char character;
         int added;
