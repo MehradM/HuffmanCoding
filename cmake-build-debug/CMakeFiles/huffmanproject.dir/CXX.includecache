@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/cygdrive/c/Users/Mehrad/CLionProjects/huffmanproject/huffman_functions.cpp
+huffman_functions.h
+/cygdrive/c/Users/Mehrad/CLionProjects/huffmanproject/huffman_functions.h
+iostream
+-
+fstream
+-
+algorithm
+-
+
+/cygdrive/c/Users/Mehrad/CLionProjects/huffmanproject/huffman_functions.h
+string
+-
+vector
+-
+map
+-
+queue
+-
+

@@ -33,4 +33,5 @@ tree_pqueue make_queue(const std::string& str);
 std::string str_to_str01(const std::string& str,const char_map& map);
 std::string str01_to_cmpStr(const std::string& str);
 char str8bit_to_char(const std::string& str8bit);
+void write(const std::string& fileName, const std::string& str);
 #endif //HUFFMANPROJECT_HUFFMAN_FUNCTIONS_H

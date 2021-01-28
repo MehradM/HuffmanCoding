@@ -47,7 +47,10 @@ map<char, pair<string,int>> character_map(tree_pqueue pqueue, TreeNode *root) {
 void make_compressed_file(const string& fileName) {
     auto str = file_to_string(fileName);
     auto huffmanString = huffman_code_string(str);
-
+    string compressedFileName = fileName;
+    compressedFileName.erase(compressedFileName.end() - 3,compressedFileName.end());
+    compressedFileName += "cmp";
+    write(compressedFileName,huffmanString);
 }
 
 string file_to_string(const string& fileName) {
@@ -69,7 +72,7 @@ std::string huffman_code_string(const string &str) {
     auto root = createTree(pqueue).top();
     auto charMap = character_map(pqueue,root);
     auto str01 = str_to_str01(str,charMap);
-    auto cmpStr = str01_to_cmpStr(str);
+    auto cmpStr = str01_to_cmpStr(str01);
     string huffmanString;
     huffmanString += to_string(str.size());
     huffmanString.push_back('\n');
@@ -81,7 +84,7 @@ std::string huffman_code_string(const string &str) {
         huffmanString.push_back('\n');
     }
     huffmanString += cmpStr;
-    return cmpStr;
+    return huffmanString;
 }
 
 tree_pqueue make_queue(const string &str) {
@@ -113,7 +116,9 @@ std::string str_to_str01(const string &str,const char_map& map) {
 std::string str01_to_cmpStr(const string &str) {
     string cmpStr;
     for (int i = 0; i < str.length(); i+=8) {
-        cmpStr.push_back(str8bit_to_char(str.substr(i,8)));
+        char a = str8bit_to_char(str.substr(i,8));
+        cout << a ;
+        cmpStr.push_back(a);
     }
     return cmpStr;
 }
@@ -130,6 +135,12 @@ char str8bit_to_char(const string &str8bit) {
         }
     }
     return a;
+}
+
+void write(const string &fileName, const string &str) {
+    ofstream file(fileName);
+    file << str;
+    file.close();
 }
 
 
