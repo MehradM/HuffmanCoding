@@ -32,9 +32,9 @@ map<char, pair<string,int>> character_map(tree_pqueue pqueue, TreeNode *root) {
         while (temp != root) {
             ++bit;
             if(temp->parent->right == temp)
-                code.push_back('1');
+                code.insert(0,1,'1');
             else if(temp->parent->left == temp)
-                code.push_back('0');
+                code.insert(0,1,'0');
             temp = temp->parent;
         }
         pair<string,int> pair{code,bit};
@@ -117,7 +117,6 @@ std::string str01_to_cmpStr(const string &str) {
     string cmpStr;
     for (int i = 0; i < str.length(); i+=8) {
         char a = str8bit_to_char(str.substr(i,8));
-        cout << a ;
         cmpStr.push_back(a);
     }
     return cmpStr;
@@ -141,6 +140,87 @@ void write(const string &fileName, const string &str) {
     ofstream file(fileName);
     file << str;
     file.close();
+}
+
+void decompress_file(const string &fileName) {
+    ifstream file(fileName);
+    int charCount, mapCount;
+    file >> charCount >> mapCount;
+    rchar_map map;
+    for (int i = 0; i < mapCount; ++i) {
+        char character; string bin;
+        file >> character >> bin;
+        map.insert({bin,character});
+    }
+    string line;
+    string lines;
+    getline(file,line);
+    lines.append(line);
+    while (file.good()) {
+        getline(file,line);
+        lines.append(line);
+        lines.push_back('\n');
+    }
+    auto str = decode(lines,map,charCount);
+    string decompressed = fileName;
+    decompressed.erase(decompressed.end() - 4,decompressed.end());
+    decompressed += "_decomp.txt";
+    ofstream filewriter(decompressed);
+    filewriter << str;
+}
+
+std::string decode(const string &lines,const rchar_map& map, int charCount) {
+    auto str01 = chars_to_01(lines);
+    int min = INT32_MAX;
+    int max = INT32_MIN;
+    for (const auto& el : map) {
+        int size = el.first.size();
+        if (min > size) {
+            min = size;
+        }
+        if (max < size) {
+            max = size;
+        }
+    }
+    string decodedString;
+    int index = 0;
+    cout << str01 << endl;
+    for (int i = 0; i < charCount; ++i) {
+        char character;
+        int added;
+        for (int j = min; j <= max; ++j) {
+            auto subStr = str01.substr(index,j);
+            if(map.count(subStr) != 0) {
+                character = map.at(subStr);
+                added = j;
+            }
+        }
+        decodedString.push_back(character);
+        index+= added;
+    }
+    return decodedString;
+}
+
+std::string char_to_01(char character) {
+    unsigned char u_char = character;
+    string binary;
+    for (unsigned char i = 128; i > 0 ; i /= 2) {
+        if(u_char/i == 1) {
+            binary.push_back('1');
+            u_char -= i;
+        } else {
+            binary.push_back('0');
+        }
+    }
+    return binary;
+}
+
+std::string chars_to_01(const std::string& chars) {
+    string binary;
+    for (const auto& el : chars) {
+        binary += char_to_01(el);
+    }
+    return binary;
 }
 
 

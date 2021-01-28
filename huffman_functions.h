@@ -24,6 +24,7 @@ public:
 };
 typedef std::priority_queue<TreeNode*, std::vector<TreeNode*>, compare> tree_pqueue;
 typedef std::map<char, std::pair<std::string,int>> char_map;
+typedef std::map<std::string, char> rchar_map;
 tree_pqueue createTree(tree_pqueue);
 std::map<char, std::pair<std::string,int>> character_map(tree_pqueue pqueue,TreeNode * root);
 void make_compressed_file(const std::string& fileName);
@@ -34,4 +35,8 @@ std::string str_to_str01(const std::string& str,const char_map& map);
 std::string str01_to_cmpStr(const std::string& str);
 char str8bit_to_char(const std::string& str8bit);
 void write(const std::string& fileName, const std::string& str);
+void decompress_file(const std::string& fileName);
+std::string decode(const std::string& lines,const rchar_map& map, int charCount);
+std::string chars_to_01(const std::string& chars);
+std::string char_to_01(char character);
 #endif //HUFFMANPROJECT_HUFFMAN_FUNCTIONS_H
