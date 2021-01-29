@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <cmath>
 using namespace std;
 
 tree_pqueue createTree(tree_pqueue queue) {
@@ -70,6 +71,7 @@ string file_to_string(const string& fileName) {
 std::string huffman_code_string(const string &str) {
     auto pqueue = make_queue(str);
     auto root = createTree(pqueue).top();
+    printTree(root);
     auto charMap = character_map(pqueue,root);
     auto str01 = str_to_str01(str,charMap);
     auto cmpStr = str01_to_cmpStr(str01);
@@ -220,6 +222,112 @@ std::string chars_to_01(const std::string& chars) {
         binary += char_to_01(el);
     }
     return binary;
+}
+
+void printTree(TreeNode *root) {
+    auto lines = new vector<vector<string*>*>;
+
+    auto level = new vector<TreeNode*>();
+    auto next = new vector<TreeNode*>();
+
+    level->push_back(root);
+    int nn = 1;
+
+    int widest = 0;
+
+    while (nn != 0) {
+        auto line = new vector<string*>;
+        nn = 0;
+
+        for (const auto& n : *level) {
+            if (n == nullptr) {
+                line->push_back(nullptr);
+
+                next->push_back(nullptr);
+                next->push_back(nullptr);
+            } else {
+                auto aa = new string(n->toString());
+                line->push_back(aa);
+                if (aa->length() > widest) widest = aa->length();
+
+                next->push_back(n->left);
+                next->push_back(n->right);
+
+                if (n->left != nullptr) nn++;
+                if (n->right != nullptr) nn++;
+            }
+        }
+
+        if (widest % 2 == 1) widest++;
+
+        lines->push_back(line);
+
+        vector<TreeNode*>* tmp = level;
+        level = next;
+        next = tmp;
+        next->clear();
+    }
+
+    int perpiece = lines->at(lines->size() - 1)->size() * (widest + 4);
+    for (int i = 0; i < lines->size(); i++) {
+        auto line = lines->at(i);
+        int hpw = (int) floor((double)perpiece / 2.0) - 1;
+
+        if (i > 0) {
+            for (int j = 0; j < line->size(); j++) {
+
+                // split node
+                string c;
+                if (j % 2 == 1) {
+                    if (line->at(j - 1) != nullptr) {
+                        c = (line->at(j) != nullptr) ? "┴" : "┘";
+                    } else {
+                        if (j < line->size() && line->at(j) != nullptr) c = ""
+                                                                            "└";
+                    }
+                }
+                cout << c;
+
+                // lines and spaces
+                if (line->at(j) == nullptr) {
+                    for (int k = 0; k < perpiece - 1; k++) {
+                        cout << " ";
+                    }
+                } else {
+
+                    for (int k = 0; k < hpw; k++) {
+                        cout << (j % 2 == 0 ? " " : "─");
+                    }
+                    cout << (j % 2 == 0 ? "┌" : "┐");
+                    for (int k = 0; k < hpw; k++) {
+                        cout << (j % 2 == 0 ? "─" : " ");
+                    }
+                }
+            }
+            cout << endl;
+        }
+
+        // print line of numbers
+        for (int j = 0; j < line->size(); j++) {
+
+            auto f = line->at(j);
+            if (f == nullptr) f = new string("");
+            int gap1 = (int) ceil((double)perpiece / 2.0 - (double)f->length() / 2.0);
+            int gap2 = (int) floor((double)perpiece / 2.0 - (double)f->length() / 2.0);
+
+            // a number
+            for (int k = 0; k < gap1; k++) {
+                cout << (" ");
+            }
+            cout << (*f);
+            for (int k = 0; k < gap2; k++) {
+                cout << " ";
+            }
+        }
+        cout << endl;
+
+        perpiece /= 2;
+    }
 }
 
 
