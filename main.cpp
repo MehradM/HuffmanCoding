@@ -3,6 +3,6 @@
 #include "huffman_functions.h"
 using namespace std;
 int main() {
-    make_compressed_file("file.txt");
+    decompress_file("file.cmp");
     return 0;
 }
