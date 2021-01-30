@@ -81,8 +81,7 @@ std::string huffman_code_string(const string &str) {
     huffmanString += to_string(charMap.size());
     huffmanString.push_back('\n');
     for (const auto& el : charMap) {
-        huffmanString.push_back(el.first);
-        huffmanString += " " + el.second.first;
+        huffmanString += to_string((int) el.first)+ " " + el.second.first;
         huffmanString.push_back('\n');
     }
     huffmanString += cmpStr;
@@ -150,7 +149,7 @@ void decompress_file(const string &fileName) {
     file >> charCount >> mapCount;
     rchar_map map;
     for (int i = 0; i < mapCount; ++i) {
-        char character; string bin;
+        int character; string bin;
         file >> character >> bin;
         map.insert({bin,character});
     }

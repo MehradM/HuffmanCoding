@@ -14,12 +14,24 @@ struct TreeNode {
     TreeNode* left = nullptr;
     TreeNode* right = nullptr;
     TreeNode* parent = nullptr;
-    std::string toString() {return data + ":" + std::to_string(quantity);}
+    std::string toString() {
+        std::string str = "";
+        for (int i = 0; i < data.length(); ++i) {
+            char character = data[i];
+            if(character >= 0 && character <= 32) {
+                str += std::to_string((int) character);
+            }
+            else {
+                str.push_back(character);
+            }
+        }
+        return str +":" + std::to_string(quantity);
+    }
 };
 
 class compare{
 public:
-    bool operator() (TreeNode* x, TreeNode* y ) {
+    bool operator() (TreeNode* x, TreeNode* y) {
         return x->quantity > y->quantity;
     }
 };
