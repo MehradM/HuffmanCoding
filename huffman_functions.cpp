@@ -73,7 +73,8 @@ std::string huffman_code_string(const string &str) {
     auto root = createTree(pqueue).top();
     printTree(root);
     auto charMap = character_map(pqueue,root);
-    auto str01 = str_to_str01(str,charMap);
+    deleteTree(root);
+    auto str01 = str_to_str01(str, charMap);
     auto cmpStr = str01_to_cmpStr(str01);
     string huffmanString;
     huffmanString += to_string(str.size());
@@ -326,6 +327,14 @@ void printTree(TreeNode *root) {
         cout << endl;
 
         perpiece /= 2;
+    }
+}
+
+void deleteTree(TreeNode *root) {
+    if (root != nullptr) {
+        deleteTree(root->left);
+        deleteTree(root->right);
+        delete root;
     }
 }
 

@@ -53,4 +53,5 @@ std::string decode(const std::string& lines,const rchar_map& map, int charCount)
 std::string chars_to_01(const std::string& chars);
 std::string char_to_01(char character);
 void printTree(TreeNode * root);
+void deleteTree(TreeNode* root);
 #endif //HUFFMANPROJECT_HUFFMAN_FUNCTIONS_H
